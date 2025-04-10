@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +10,7 @@ import InterviewControls from '@/components/interview/InterviewControls';
 import InterviewQuestion from '@/components/interview/InterviewQuestion';
 import { getRandomQuestion, getInterviewSet, InterviewQuestion as IQuestion } from '@/utils/interviewQuestions';
 import { analyzeFace, FaceAnalysisResult } from '@/utils/faceAnalysis';
-import { analyzeVoice, VoiceAnalysisResult } from '@/utils/voiceAnalysis';
+import { analyzeVoice, VoiceAnalysisResult, startVoiceAnalysis, stopVoiceAnalysis } from '@/utils/voiceAnalysis';
 import { calculateInterviewScore, InterviewScore, getScoreColor, generateImprovementSuggestions } from '@/utils/scoreCalculation';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Check, AlertCircle, Info } from 'lucide-react';
