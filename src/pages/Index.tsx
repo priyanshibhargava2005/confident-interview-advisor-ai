@@ -10,7 +10,7 @@ import {
   CheckCircle, 
   Brain, 
   ChevronRight,
-  MicVoice,
+  Mic,
   LineChart,
   PencilRuler
 } from 'lucide-react';
@@ -67,7 +67,7 @@ const Index = () => {
               </div>
               
               <div className="feature-card">
-                <MicVoice className="w-12 h-12 text-interview-secondary mb-4" />
+                <Mic className="w-12 h-12 text-interview-secondary mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Voice Assessment</h3>
                 <p className="text-gray-600">
                   Get feedback on filler words, speech clarity, and speaking pace to improve your communication.
