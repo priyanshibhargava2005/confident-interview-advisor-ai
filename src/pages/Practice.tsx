@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -48,6 +47,9 @@ const Practice = () => {
     setHasCompletedInterview(false);
     setTimeRemaining(60);
     
+    // Start voice analysis
+    startVoiceAnalysis();
+    
     toast({
       title: "Interview started",
       description: "Answer the question clearly and confidently.",
@@ -82,17 +84,9 @@ const Practice = () => {
       timerRef.current = null;
     }
     
-    // Generate a mock voice analysis result since we don't have real audio processing
-    const mockVoiceResult: VoiceAnalysisResult = {
-      fillerWordCount: Math.floor(Math.random() * 10),
-      fillerWordPercentage: Math.random() * 0.1, // 0-10%
-      toneConfidence: 0.5 + Math.random() * 0.5,
-      speakingPace: 0.6 + Math.random() * 0.4,
-      clarity: 0.6 + Math.random() * 0.4,
-      volume: 0.7 + Math.random() * 0.3
-    };
-    
-    setVoiceResults(mockVoiceResult);
+    // Stop voice analysis and get results
+    const voiceResult = stopVoiceAnalysis();
+    setVoiceResults(voiceResult);
     
     // Calculate average face analysis results
     const avgFaceResults = analysisResults.length > 0
@@ -112,7 +106,7 @@ const Practice = () => {
         };
     
     // Calculate interview score
-    const interviewScore = calculateInterviewScore(avgFaceResults, mockVoiceResult);
+    const interviewScore = calculateInterviewScore(avgFaceResults, voiceResult);
     setScore(interviewScore);
     setHasCompletedInterview(true);
     

@@ -15,6 +15,7 @@ const WebcamFeed: React.FC<WebcamFeedProps> = ({ onVideoFrame, isRecording }) =>
   const [isMicOn, setIsMicOn] = useState(true);
   const [isVideoOn, setIsVideoOn] = useState(true);
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const [micPermissionDenied, setMicPermissionDenied] = useState(false);
 
   useEffect(() => {
     const startCamera = async () => {
@@ -32,9 +33,18 @@ const WebcamFeed: React.FC<WebcamFeedProps> = ({ onVideoFrame, isRecording }) =>
         }
         
         setPermissionDenied(false);
+        setMicPermissionDenied(false);
       } catch (err) {
-        console.error('Error accessing camera:', err);
-        setPermissionDenied(true);
+        console.error('Error accessing camera or microphone:', err);
+        // Check if it's a permission error
+        if (err instanceof DOMException && 
+            (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')) {
+          if (err.message.includes('audio')) {
+            setMicPermissionDenied(true);
+          } else {
+            setPermissionDenied(true);
+          }
+        }
       }
     };
 
@@ -92,6 +102,12 @@ const WebcamFeed: React.FC<WebcamFeedProps> = ({ onVideoFrame, isRecording }) =>
             muted 
             className="w-full h-full object-cover"
           />
+        )}
+        
+        {micPermissionDenied && (
+          <div className="absolute top-4 right-4 bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Microphone access denied
+          </div>
         )}
         
         {isRecording && (
